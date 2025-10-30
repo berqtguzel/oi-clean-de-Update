@@ -70,7 +70,7 @@ export default function HeroSection({ content }) {
 
                 <motion.div className="mt-10 space-x-4" variants={item}>
                     <Link
-                        href="/dienstleistungen"
+                        href="#services"
                         className="bg-yellow-400 text-gray-900 font-bold py-3 px-8 rounded-full hover:bg-yellow-500 transition duration-300"
                     >
                         Unsere Leistungen entdecken

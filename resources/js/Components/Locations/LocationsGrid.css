@@ -21,7 +21,12 @@
     color: #111827;
     margin-bottom: 1rem;
 }
-
+.dark .locations-title{
+    color: #f8fafc;
+}
+.dark .locations-subtitle{
+    color: #cbd5e1;
+}
 @media (min-width: 768px) {
     .locations-title {
         font-size: 3rem;
@@ -111,5 +116,5 @@
 
 /* LiquidEther arka plan stili */
 .liquid-ether-bg {
-    opacity: 0.3;
+    opacity: 0.6;
 }

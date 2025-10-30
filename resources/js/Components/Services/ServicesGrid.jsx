@@ -15,7 +15,22 @@ import {
 
 import LiquidEther from "../ReactBits/Backgrounds/LiquidEther";
 
-// 🔹 Lazy load animasyonu
+/* --- Tema durumu ( .dark class ) dinlemek için küçük yardımcı hook --- */
+function useIsDark() {
+    const get = () => document.documentElement.classList.contains("dark");
+    const [isDark, setIsDark] = React.useState(get());
+
+    React.useEffect(() => {
+        const el = document.documentElement;
+        const obs = new MutationObserver(() => setIsDark(get()));
+        obs.observe(el, { attributes: true, attributeFilter: ["class"] });
+        return () => obs.disconnect();
+    }, []);
+
+    return isDark;
+}
+
+/* --- Lazy load animasyonu --- */
 const useIntersectionObserver = (ref) => {
     React.useEffect(() => {
         const observer = new IntersectionObserver(
@@ -127,9 +142,13 @@ const ServicesGrid = ({ services = defaultServices }) => {
     const gridRef = React.useRef(null);
     useIntersectionObserver(gridRef);
 
-    // Eğer parent boş bir array verdiyse fallback olarak defaultServices kullan
     const servicesToRender =
         services && services.length ? services : defaultServices;
+
+    // Dark/light paletleri (LiquidEther için)
+    const isDark = useIsDark();
+    const lightColors = ["#085883", "#0C9FE2", "#2EA7E0"];
+    const darkColors = ["#47B3FF", "#7CCBFF", "#B5E3FF"]; // daha açık/parlak
 
     // SEO için JSON-LD
     const schemaData = {
@@ -157,7 +176,6 @@ const ServicesGrid = ({ services = defaultServices }) => {
     };
 
     return (
-        // 👉 Arka planı section içine sabitliyoruz
         <section
             className="services-section relative overflow-hidden"
             aria-labelledby="services-title"
@@ -172,11 +190,13 @@ const ServicesGrid = ({ services = defaultServices }) => {
                     {JSON.stringify(schemaData)}
                 </script>
             </Head>
-            <div className="absolute inset-0 z-10 liquid-ether-bg" /* z-10 */>
+
+            {/* Arka plan */}
+            <div className="absolute inset-0 z-10 liquid-ether-bg">
                 <LiquidEther
                     className="w-full h-full"
                     style={{ pointerEvents: "auto" }}
-                    colors={["#085883", "#0C9FE2", "#2EA7E0"]}
+                    colors={isDark ? darkColors : lightColors}
                     mouseForce={35}
                     cursorSize={140}
                     isViscous={false}

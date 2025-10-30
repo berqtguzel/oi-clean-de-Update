@@ -49,6 +49,7 @@ const ContactSection = () => {
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
+                                    aria-hidden="true"
                                 >
                                     <path
                                         strokeLinecap="round"
@@ -74,6 +75,7 @@ const ContactSection = () => {
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
+                                    aria-hidden="true"
                                 >
                                     <path
                                         strokeLinecap="round"
@@ -99,6 +101,7 @@ const ContactSection = () => {
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
+                                    aria-hidden="true"
                                 >
                                     <path
                                         strokeLinecap="round"
@@ -130,7 +133,11 @@ const ContactSection = () => {
                         </div>
                     </div>
 
-                    <form onSubmit={handleSubmit} className="contact-form">
+                    <form
+                        onSubmit={handleSubmit}
+                        className="contact-form"
+                        noValidate
+                    >
                         <div className="form-grid">
                             <div className="form-group">
                                 <label htmlFor="name">Name *</label>
@@ -143,9 +150,17 @@ const ContactSection = () => {
                                     }
                                     required
                                     className={errors.name ? "error" : ""}
+                                    aria-invalid={!!errors.name}
+                                    aria-describedby={
+                                        errors.name ? "name-error" : undefined
+                                    }
                                 />
                                 {errors.name && (
-                                    <span className="error-message">
+                                    <span
+                                        id="name-error"
+                                        className="error-message"
+                                        role="alert"
+                                    >
                                         {errors.name}
                                     </span>
                                 )}
@@ -174,9 +189,17 @@ const ContactSection = () => {
                                     }
                                     required
                                     className={errors.email ? "error" : ""}
+                                    aria-invalid={!!errors.email}
+                                    aria-describedby={
+                                        errors.email ? "email-error" : undefined
+                                    }
                                 />
                                 {errors.email && (
-                                    <span className="error-message">
+                                    <span
+                                        id="email-error"
+                                        className="error-message"
+                                        role="alert"
+                                    >
                                         {errors.email}
                                     </span>
                                 )}
@@ -237,9 +260,19 @@ const ContactSection = () => {
                                     required
                                     rows="5"
                                     className={errors.message ? "error" : ""}
+                                    aria-invalid={!!errors.message}
+                                    aria-describedby={
+                                        errors.message
+                                            ? "message-error"
+                                            : undefined
+                                    }
                                 />
                                 {errors.message && (
-                                    <span className="error-message">
+                                    <span
+                                        id="message-error"
+                                        className="error-message"
+                                        role="alert"
+                                    >
                                         {errors.message}
                                     </span>
                                 )}
@@ -260,14 +293,21 @@ const ContactSection = () => {
                                     />
                                     <span>
                                         Ich akzeptiere die{" "}
-                                        <a href="/datenschutz" target="_blank">
+                                        <a
+                                            href="/datenschutz"
+                                            target="_blank"
+                                            rel="noreferrer"
+                                        >
                                             Datenschutzerklärung
                                         </a>{" "}
                                         *
                                     </span>
                                 </label>
                                 {errors.acceptTerms && (
-                                    <span className="error-message">
+                                    <span
+                                        className="error-message"
+                                        role="alert"
+                                    >
                                         {errors.acceptTerms}
                                     </span>
                                 )}

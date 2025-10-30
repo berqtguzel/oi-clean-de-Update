@@ -3,7 +3,12 @@ import { Link } from "@inertiajs/react";
 import { motion } from "framer-motion";
 import { FaHotel, FaBuilding, FaTools } from "react-icons/fa";
 import Aurora from "../ReactBits/Backgrounds/Aurora";
+import "../../../css/ServiceCategories.css";
 
+/**
+ * Kategori verileri: gradient için hex kullanıyoruz
+ * (Tailwind 'from-.. to-..' yerine).
+ */
 const categories = [
     {
         title: "Hotelreinigung & Housekeeping",
@@ -11,7 +16,7 @@ const categories = [
             "Von der Zimmerreinigung bis zur Spülküche – perfekte Hygiene und effiziente Abläufe in jedem Bereich Ihres Hotels.",
         icon: FaHotel,
         url: "/dienstleistungen/hotel",
-        color: "from-blue-600 to-blue-400",
+        gradient: ["#2563EB", "#60A5FA"], // blue-600 -> blue-400
     },
     {
         title: "Professionelle Gebäudereinigung",
@@ -19,7 +24,7 @@ const categories = [
             "Büros, Gewerbeflächen, Bauendreinigung und Spezialreinigungen – wir lassen Ihre Immobilien glänzen.",
         icon: FaBuilding,
         url: "/dienstleistungen/gebaeude",
-        color: "from-gray-700 to-gray-500",
+        gradient: ["#334155", "#64748B"], // slate-700 -> slate-500
     },
     {
         title: "Renovierung, Reparatur & Instandhaltung",
@@ -27,20 +32,26 @@ const categories = [
             "Maler-, Spachtel- und Trockenbauarbeiten sowie Bodenverlegung und kleinere Reparaturen.",
         icon: FaTools,
         url: "/dienstleistungen/renovierung",
-        color: "from-yellow-600 to-yellow-400",
+        gradient: ["#CA8A04", "#F59E0B"], // yellow-600 -> yellow-500
     },
 ];
 
-export default function ServiceCategories({ content }) {
+/** Yardımcı: CSS inline gradient stili üretir */
+const gradientStyle = (from, to) => ({
+    backgroundImage: `linear-gradient(to right, ${from}, ${to})`,
+});
+
+export default function ServiceCategories({ content = {} }) {
     return (
         <section
             id="services"
-            className="relative py-24 bg-transparent"
+            className="svc-section"
             style={{ isolation: "isolate" }}
         >
-            <div className="absolute inset-0 z-0 mix-blend-screen pointer-events-none">
+            {/* Arka plan aurora */}
+            <div className="svc-aurora">
                 <Aurora
-                    className="w-full h-full"
+                    className="svc-aurora-canvas"
                     colorStops={["#0894D7", "#2967EC", "#0284C7"]}
                     blend={0}
                     amplitude={0.65}
@@ -48,31 +59,33 @@ export default function ServiceCategories({ content }) {
                 />
             </div>
 
-            <div className="relative z-10 container mx-auto px-6 py-24">
+            <div className="svc-container">
                 <motion.div
                     initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
                     viewport={{ once: true }}
-                    className="text-center mb-16"
+                    className="svc-header"
                 >
-                    <h2 className="text-4xl font-extrabold text-white">
+                    <h2 className="svc-title">
                         {content.section_services ||
                             "Unser breites Leistungsspektrum"}
                     </h2>
-                    <p className="mt-4 text-xl text-white max-w-3xl mx-auto">
+                    <p className="svc-subtitle">
                         Wir bieten schlüsselfertige Lösungen für alle
                         Anforderungen Ihrer Einrichtungen und Gebäude – mit
                         deutscher Präzision und Qualität.
                     </p>
                 </motion.div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div className="svc-grid">
                     {categories.map((cat, index) => {
                         const Icon = cat.icon;
+                        const [from, to] = cat.gradient;
+
                         return (
-                            <motion.div
-                                key={index}
+                            <motion.article
+                                key={cat.title + index}
                                 initial={{ opacity: 0, y: 50 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{
@@ -81,36 +94,39 @@ export default function ServiceCategories({ content }) {
                                 }}
                                 whileHover={{ scale: 1.03 }}
                                 viewport={{ once: true }}
-                                className="group bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-300"
+                                className="svc-card"
                             >
                                 {/* Üst renkli bar */}
                                 <div
-                                    className={`h-2 bg-gradient-to-r ${cat.color}`}
-                                ></div>
+                                    className="svc-card-bar"
+                                    style={gradientStyle(from, to)}
+                                />
 
                                 {/* İçerik */}
-                                <div className="p-8 flex flex-col items-center text-center">
+                                <div className="svc-card-body">
                                     <div
-                                        className={`p-4 bg-gradient-to-r ${cat.color} rounded-full text-white shadow-md mb-6 transition-transform duration-300 group-hover:rotate-6`}
+                                        className="svc-card-icon"
+                                        style={gradientStyle(from, to)}
                                     >
                                         <Icon size={36} />
                                     </div>
 
-                                    <h3 className="text-2xl font-bold text-gray-800 mb-3 group-hover:text-blue-700 transition">
+                                    <h3 className="svc-card-title">
                                         {cat.title}
                                     </h3>
 
-                                    <p className="text-gray-600 flex-grow mb-6">
+                                    <p className="svc-card-desc">
                                         {cat.description}
                                     </p>
 
                                     <Link
                                         href={cat.url}
-                                        className="text-blue-600 font-semibold hover:text-blue-800 transition duration-150 flex items-center justify-center"
+                                        className="svc-card-link"
+                                        aria-label={`${cat.title} – mehr erfahren`}
                                     >
                                         Mehr erfahren
                                         <motion.svg
-                                            className="w-4 h-4 ml-1"
+                                            className="svc-card-link-arrow"
                                             fill="none"
                                             stroke="currentColor"
                                             viewBox="0 0 24 24"
@@ -126,11 +142,11 @@ export default function ServiceCategories({ content }) {
                                                 strokeLinejoin="round"
                                                 strokeWidth="2"
                                                 d="M9 5l7 7-7 7"
-                                            ></path>
+                                            />
                                         </motion.svg>
                                     </Link>
                                 </div>
-                            </motion.div>
+                            </motion.article>
                         );
                     })}
                 </div>

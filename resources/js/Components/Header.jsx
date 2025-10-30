@@ -431,11 +431,10 @@ const Header = ({ currentRoute }) => {
                             <div className="nav__cta">
                                 <ThemeToggle />
                                 <Link
-                                    href="/angebot"
+                                    href="/impressum"
                                     className="btn btn--primary ml-4"
                                 >
-                                    <FaPaperPlane aria-hidden /> Angebot
-                                    anfordern
+                                    Impressum
                                 </Link>
                             </div>
                         </nav>
