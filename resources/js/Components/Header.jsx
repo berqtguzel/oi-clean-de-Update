@@ -14,6 +14,9 @@ import {
     FaTimes,
     FaQuestionCircle,
 } from "react-icons/fa";
+import ThemeToggle from "./ThemeToggle";
+
+import DecryptedText from "./ReactBits/Texts/DescryptedText";
 
 function cx(...args) {
     return args.filter(Boolean).join(" ");
@@ -22,6 +25,11 @@ function cx(...args) {
 const BitsBackground = () => <div aria-hidden className="rbits-bg" />;
 
 const Header = ({ currentRoute }) => {
+    useEffect(() => {
+        const open = () => setShowQuoteModal(true);
+        window.addEventListener("open-quote-modal", open);
+        return () => window.removeEventListener("open-quote-modal", open);
+    }, []);
     const [isTopBarVisible, setIsTopBarVisible] = useState(true);
     const [openMenu, setOpenMenu] = useState(false); // mobile drawer
     const [openDropdown, setOpenDropdown] = useState(null); // desktop root dropdown key
@@ -94,82 +102,6 @@ const Header = ({ currentRoute }) => {
             url: "/dienstleistungen",
             icon: <FaBroom aria-hidden="true" />,
             dropdownKey: "services",
-            mega: {
-                columns: [
-                    {
-                        title: "Gebäudereinigung",
-                        items: [
-                            {
-                                name: "Unterhaltsreinigung",
-                                url: "/dienstleistungen/unterhaltsreinigung",
-                            },
-                            {
-                                name: "Büroreinigung",
-                                url: "/dienstleistungen/buroreinigung",
-                            },
-                            {
-                                name: "Glas- & Fensterreinigung",
-                                url: "/dienstleistungen/fensterreinigung",
-                            },
-                        ],
-                    },
-                    {
-                        title: "Spezialreinigung",
-                        items: [
-                            {
-                                name: "Baureinigung",
-                                url: "/dienstleistungen/baureinigung",
-                            },
-                            {
-                                name: "Grundreinigung",
-                                url: "/dienstleistungen/grundreinigung",
-                            },
-                            {
-                                name: "Teppichreinigung",
-                                url: "/dienstleistungen/teppichreinigung",
-                            },
-                        ],
-                    },
-                    {
-                        title: "Hygiene & Sanitär",
-                        items: [
-                            {
-                                name: "Sanitärreinigung",
-                                url: "/dienstleistungen/sanitarreinigung",
-                            },
-                            {
-                                name: "Desinfektionsservice",
-                                url: "/dienstleistungen/desinfektion",
-                            },
-                            {
-                                name: "Küchenhygiene",
-                                url: "/dienstleistungen/kuchenhygiene",
-                            },
-                        ],
-                    },
-                    {
-                        title: "Außenbereiche",
-                        items: [
-                            {
-                                name: "Fassadenreinigung",
-                                url: "/dienstleistungen/fassadenreinigung",
-                            },
-                            {
-                                name: "Parkraumreinigung",
-                                url: "/dienstleistungen/parkraum",
-                            },
-                            {
-                                name: "Winterdienst",
-                                url: "/dienstleistungen/winterdienst",
-                            },
-                        ],
-                    },
-                ],
-                cta: {
-                    label: "Alle Leistungen ansehen",
-                    url: "/dienstleistungen",
-                },
-            },
         },
         {
             name: "Standorte",
@@ -198,12 +130,23 @@ const Header = ({ currentRoute }) => {
                                 <span className="topbar__phone">
                                     <FaPhoneAlt aria-hidden="true" />
                                     <a href="tel:+490000000">
-                                        +49 000 0000 000
+                                        <DecryptedText
+                                            text="+49 000 0000 000"
+                                            animateOn="view"
+                                            speed={100}
+                                            revealDirection="center"
+                                        />
                                     </a>
                                 </span>
                                 <span className="topbar__tagline">
-                                    Sauberkeit, auf die Sie sich verlassen
-                                    können — 24/7 Service
+                                    <div style={{ marginTop: "0" }}>
+                                        <DecryptedText
+                                            text="Sauberkeit, auf die Sie sich verlassen können — 24/7 Service"
+                                            animateOn="view"
+                                            speed={100}
+                                            revealDirection="center"
+                                        />
+                                    </div>
                                 </span>
                             </div>
                             <div className="topbar__right">
@@ -486,9 +429,10 @@ const Header = ({ currentRoute }) => {
                             })}
 
                             <div className="nav__cta">
+                                <ThemeToggle />
                                 <Link
                                     href="/angebot"
-                                    className="btn btn--primary"
+                                    className="btn btn--primary ml-4"
                                 >
                                     <FaPaperPlane aria-hidden /> Angebot
                                     anfordern
@@ -705,11 +649,14 @@ const Header = ({ currentRoute }) => {
                             );
                         })}
 
+                        <div className="drawer__theme-toggle">
+                            <ThemeToggle />
+                        </div>
                         <Link
-                            href="/angebot"
+                            href="/impressum"
                             className="btn btn--primary btn--block"
                         >
-                            <FaPaperPlane aria-hidden /> Angebot anfordern
+                            Impressum
                         </Link>
                     </div>
                 </aside>

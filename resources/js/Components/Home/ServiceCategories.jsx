@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "@inertiajs/react";
 import { motion } from "framer-motion";
 import { FaHotel, FaBuilding, FaTools } from "react-icons/fa";
+import Aurora from "../ReactBits/Backgrounds/Aurora";
 
 const categories = [
     {
@@ -33,11 +34,21 @@ const categories = [
 export default function ServiceCategories({ content }) {
     return (
         <section
-            className="py-24 bg-gradient-to-b from-gray-50 to-white"
             id="services"
+            className="relative py-24 bg-transparent"
+            style={{ isolation: "isolate" }}
         >
-            <div className="container mx-auto px-6">
-                {/* Überschrift */}
+            <div className="absolute inset-0 z-0 mix-blend-screen pointer-events-none">
+                <Aurora
+                    className="w-full h-full"
+                    colorStops={["#0894D7", "#2967EC", "#0284C7"]}
+                    blend={0}
+                    amplitude={0.65}
+                    speed={0.6}
+                />
+            </div>
+
+            <div className="relative z-10 container mx-auto px-6 py-24">
                 <motion.div
                     initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -45,18 +56,17 @@ export default function ServiceCategories({ content }) {
                     viewport={{ once: true }}
                     className="text-center mb-16"
                 >
-                    <h2 className="text-4xl font-extrabold text-gray-800">
+                    <h2 className="text-4xl font-extrabold text-white">
                         {content.section_services ||
                             "Unser breites Leistungsspektrum"}
                     </h2>
-                    <p className="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
+                    <p className="mt-4 text-xl text-white max-w-3xl mx-auto">
                         Wir bieten schlüsselfertige Lösungen für alle
                         Anforderungen Ihrer Einrichtungen und Gebäude – mit
                         deutscher Präzision und Qualität.
                     </p>
                 </motion.div>
 
-                {/* Karten */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
                     {categories.map((cat, index) => {
                         const Icon = cat.icon;

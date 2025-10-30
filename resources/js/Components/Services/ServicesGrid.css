@@ -1,0 +1,213 @@
+/* ====== Services section: LiquidEther-first tasarım ====== */
+.services-section {
+  padding: 5rem 1rem;
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+  isolation: isolate; /* stacking context */
+  min-height: 60vh;
+}
+
+/* LiquidEther konumlandırma */
+.services-section.has-liquid-ether {
+  position: relative;
+  overflow: hidden;
+}
+.liquid-ether-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -10; /* arka planda */
+  pointer-events: auto; /* etkileşim aktif */
+}
+.content-on-bg {
+  position: relative;
+  z-index: 10;
+}
+
+/* LiquidEther container kontrolü */
+.liquid-ether-bg .liquid-ether-container {
+  opacity: 1;
+  transition: opacity 240ms ease;
+}
+
+/* Okunabilirliği artıran hafif üst-tint */
+.services-section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -5;
+
+  pointer-events: none;
+  mix-blend-mode: normal;
+}
+
+/* Dekoratif üst çizgi */
+.services-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Container */
+.services-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 20;
+}
+
+/* ====== Header ====== */
+.services-header {
+  text-align: center;
+  margin-bottom: 4rem;
+  position: relative;
+}
+
+.services-title {
+  font-size: clamp(2rem, 5vw, 2.5rem);
+  font-weight: 800;
+  color: black;
+  margin-bottom: 1rem;
+  font-family: var(--font-heading, ui-sans-serif);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+.services-subtitle {
+  font-size: clamp(1rem, 2vw, 1.125rem);
+  color: black;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+}
+
+/* ====== Grid ====== */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: clamp(1rem, 3vw, 2rem);
+  margin-bottom: 4rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.services-grid.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ====== CTA ====== */
+.services-cta {
+  text-align: center;
+  margin-top: 4rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.services-cta.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.services-contact-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  background-color: #0ea5e9;
+  color: black;
+  border-radius: 9999px;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.services-contact-button:hover {
+  background-color: #0284c7;
+  transform: translateY(-2px);
+}
+
+.services-arrow-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.services-contact-button:hover .services-arrow-icon {
+  transform: translateX(6px);
+}
+
+
+.services-contact-button:focus-visible {
+  outline: 2px solid #0ea5e9;
+  outline-offset: 2px;
+}
+
+.services-container h1,
+.services-container h2,
+.services-container h3,
+.services-container h4 {
+  color: black;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* ====== Print ====== */
+@media print {
+  .services-section {
+    background: none;
+    padding: 2rem 0;
+  }
+
+  .liquid-ether-bg,
+  .services-section::after {
+    display: none !important;
+  }
+
+  .services-grid {
+    gap: 1rem;
+  }
+
+  .services-contact-button {
+    display: none;
+  }
+}
+
+/* ====== Dark mode ====== */
+
+
+/* ====== Motion reduce ====== */
+@media (prefers-reduced-motion: reduce) {
+  .services-grid,
+  .services-cta,
+  .services-contact-button {
+    transition: none;
+  }
+
+  .liquid-ether-bg {
+    display: none !important;
+  }
+
+  .services-section::after {
+    background: linear-gradient(145deg, #f8fafc, #f1f5f9);
+  }
+}
+
+/* ====== Manuel kapatma opsiyonu ====== */
+.services-section.no-liquid-ether {
+  background: linear-gradient(145deg, #f8fafc, #f1f5f9);
+}
+.services-section.no-liquid-ether::after,
+.services-section.no-liquid-ether .liquid-ether-bg {
+  display: none !important;
+}

@@ -1,20 +1,29 @@
+import React from "react";
 import HeroSection from "@/Components/Home/HeroSection";
 import ServiceCategories from "@/Components/Home/ServiceCategories";
 import AppLayout from "@/Layouts/AppLayout";
+import ServicesGrid from "@/Components/Services/ServicesGrid";
+import LocationsGrid from "@/Components/Locations/LocationsGrid";
+import ContactSection from "@/Components/Contact/ContactSection";
 
-export default function Home({ content, currentRoute }) {
+export default function Home({
+    content,
+    services = [],
+    locations = [],
+    settings = {},
+    currentRoute,
+}) {
     return (
-        <AppLayout content={content} currentRoute={currentRoute}>
+        <AppLayout
+            content={content}
+            currentRoute={currentRoute}
+            settings={settings}
+        >
             <HeroSection content={content} />
             <ServiceCategories content={content} />
-            <div className="py-16 bg-gray-50 text-center">
-                <h2 className="text-3xl font-bold text-gray-800">
-                    O&I CLEAN: Temizlikte Lider
-                </h2>
-                <p className="mt-4 text-gray-600 max-w-4xl mx-auto">
-                    birleştiriyoruz.
-                </p>
-            </div>
+            <ServicesGrid services={services} />
+            <LocationsGrid locations={locations} />
+            <ContactSection settings={settings} />
         </AppLayout>
     );
 }
