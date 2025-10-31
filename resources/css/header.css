@@ -15,7 +15,7 @@
 
   --radius:16px;
   --radius-lg:20px;
-  --h-desktop:80px; /* bigger header */
+  --h-desktop:80px;
 
   /* UI tokens */
   --ghost-bg: rgba(255,255,255,.15);
@@ -70,9 +70,7 @@
 /* ---------------- Glass nav wrapper ---------------- */
 .navwrap{backdrop-filter:saturate(1.1) blur(8px);background:var(--glass);box-shadow:0 1px 0 rgba(2,6,23,.04)}
 .navwrap__inner{display:flex;align-items:center;justify-content:space-between;height:var(--h-desktop);}
-
 .brand{display:flex;align-items:center;gap:10px;border-radius:12px;outline:0}
-.brand__logo{height:48px;width:auto}
 .brand--sm .brand__logo{height:40px}
 
 /* ---------------- Desktop nav ---------------- */
@@ -135,23 +133,73 @@
 .drawer__body{padding:16px;display:flex;flex-direction:column;gap:12px;overflow:auto;height:calc(100% - 80px)}
 
 /* ---------------- Accordion (mobile) ---------------- */
-.acc{border:1px solid var(--dropdown-border);border-radius:16px;overflow:hidden}
-.acc__toggle{width:100%;display:flex;align-items:center;justify-content:space-between;background:var(--surface);padding:14px 16px;border:none;font-weight:600;color:var(--ink-900);cursor:pointer}
+.acc{
+  border:1px solid var(--dropdown-border);
+  border-radius:16px;
+  background:var(--surface);
+  overflow:hidden;
+}
+
+/* Başlık */
+.acc__toggle{
+  width:100%;
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--surface);
+  padding:14px 16px;border:none;
+  font-weight:600;color:var(--ink-900);
+  cursor:pointer;
+}
 .acc__left{display:inline-flex;align-items:center;gap:10px}
-.acc__icon{display:inline-flex}
-.acc__chev{transition:transform .2s ease}
+
+/* Chevron: sadece açıkken görünür */
+.acc__chev{
+  opacity:0; visibility:hidden;
+  transition:transform .22s ease, opacity .18s ease, visibility .18s;
+}
+.acc__toggle[aria-expanded="true"] .acc__chev{
+  opacity:1; visibility:visible;
+}
 .acc__chev.rot{transform:rotate(180deg)}
-.acc__content{display:grid;grid-template-rows:0fr;transition:grid-template-rows .25s ease}
-.acc__content.open{grid-template-rows:1fr}
-.acc__menu,.acc__mega{overflow:hidden;padding:8px 12px}
-.acc__title{text-transform:uppercase;letter-spacing:.06em;font-size:12px;color:var(--ink-500);margin:10px 0}
-.acc__list{list-style:none;margin:0;padding:0}
-.acc__link{display:block;padding:10px 12px;border-radius:10px;text-decoration:none;color:var(--ink-700)}
+
+/* İçerik – max-height animasyonu, tamamen açılsın */
+.acc__content{
+  max-height:0;
+  opacity:0;
+  visibility:hidden;
+  overflow:hidden;
+  will-change:max-height, opacity;
+  transition:max-height .28s ease, opacity .22s ease, visibility .22s linear;
+}
+.acc__content.open{
+  max-height:85vh;    /* geniş alan; drawer gövdesi scroll'lu */
+  opacity:1;
+  visibility:visible;
+}
+
+/* İç bloklar */
+.acc__menu,.acc__mega{padding:8px 12px}
+.acc__link{
+  display:block;padding:10px 12px;border-radius:10px;
+  text-decoration:none;color:var(--ink-700);
+}
 .acc__link:hover{background:var(--brand-50);color:var(--brand-700)}
+
+/* Nested submenu (details/summary) caret */
 .acc__details{border:1px solid var(--dropdown-border);border-radius:12px;overflow:hidden}
-.acc__details summary{cursor:pointer;padding:10px 12px;font-weight:600}
+.acc__details summary{
+  cursor:pointer;padding:10px 12px;font-weight:600;list-style:none;position:relative;padding-right:26px;
+}
+.acc__details summary::-webkit-details-marker{display:none;}
+.acc__details summary::after{
+  content:"";position:absolute;right:10px;top:50%;transform:translateY(-50%) rotate(0);
+  width:8px;height:8px;border-right:2px solid var(--ink-600);border-bottom:2px solid var(--ink-600);
+  transition:transform .2s ease;
+}
+.acc__details[open] summary::after{transform:translateY(-50%) rotate(225deg);}
 .acc__submenu{padding:8px 8px 12px}
-.acc__cta{margin-top:8px}
+
+/* Dark */
+.dark .acc{border-color:#1e293b;background:var(--surface);}
 
 /* ---------------- Theme Toggle ---------------- */
 .drawer__theme-toggle{display:flex;justify-content:center;padding:16px 0;border-top:1px solid var(--dropdown-border);border-bottom:1px solid var(--dropdown-border);margin:8px 0}
@@ -172,9 +220,8 @@
   --ring:rgba(56,189,248,.25);
   --shadow:0 10px 30px rgba(2,6,23,.3);
 
-  /* DROPDOWNLAR İÇİN ÖNEMLİ OVERRIDE */
-  --dropdown-bg:#0b0c10;        /* siyaha yakın zemin */
-  --dropdown-border:#1e293b;    /* slate-800 */
+  --dropdown-bg:#0b0c10;
+  --dropdown-border:#1e293b;
   --ghost-bg:rgba(255,255,255,.06);
 }
 
@@ -186,7 +233,6 @@
 .dark .drawer__head{border-color:#1e293b;}
 .dark .drawer__theme-toggle{border-color:#1e293b;}
 
-/* Dropdown/Mega/Submenu panelleri – siyah/koyu */
 .dark .dropdown,
 .dark .dropdown--mega,
 .dark .submenu{
@@ -196,7 +242,6 @@
   backdrop-filter:blur(8px);
 }
 
-/* Menü linkleri ve ikonlar (kontrast) */
 .dark .menu__link,
 .dark .submenu__link,
 .dark .mega__link{color:var(--ink-700);}
@@ -204,7 +249,6 @@
 .dark .nav__chev,
 .dark .menu__chev{color:var(--ink-500);}
 
-/* Hover/focus durumları */
 .dark .menu__link:hover,
 .dark .submenu__link:hover,
 .dark .mega__link:hover{
@@ -212,7 +256,6 @@
   color:var(--ink-700);
 }
 
-/* Mega başlık ve footer çizgisi */
 .dark .mega__title{color:#94a3b8;}
 .dark .mega__footer{border-top-color:var(--dropdown-border);}
 
@@ -237,14 +280,16 @@
 .lang-switch__item{display:block;width:100%;padding:8px 10px;border-radius:8px;text-align:left;background:transparent;border:none;cursor:pointer}
 .lang-switch__item:hover{background:var(--brand-50)}
 .lang-switch__item.is-active{font-weight:700;color:var(--brand-700)}
+.dark .lang-switch__list{background:var(--surface);border-color:#1e293b;}
 
-/* Language Switcher – dark */
-.dark .lang-switch__list{
-  background:var(--surface);
-  border-color:#1e293b;
-}
-
-/* ---------------- Mobile drawer language spacing ---------------- */
+/* Drawer language area */
 .drawer__lang{padding:8px 12px;border-top:1px solid #f1f5f9}
 .drawer__lang-label{display:block;font-size:12px;color:var(--ink-500);margin-bottom:8px}
 .drawer__lang-buttons{display:flex;gap:8px}
+
+/* Light/Dark logo switch */
+.brand__logo--dark { display: none; }
+.brand__logo--light { display: block; }
+.dark .brand__logo--light { display: none; }
+.dark .brand__logo--dark  { display: block; }
+.brand__logo { height: 56px; width: auto; }

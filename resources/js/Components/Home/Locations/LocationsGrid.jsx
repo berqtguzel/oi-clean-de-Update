@@ -1,6 +1,6 @@
 import React from "react";
 import { Head } from "@inertiajs/react";
-import "./LocationsGrid.css";
+import "../../../../css/LocationsGrid.css";
 import GermanyMap from "./GermanyMap";
 import LocationCard from "./LocationCard";
 
@@ -39,12 +39,10 @@ const defaultLocations = [
 ];
 
 const LocationsGrid = ({ locations = [] }) => {
-    // props içeriği boşsa fallback kullan
     const items = locations && locations.length ? locations : defaultLocations;
     const mapRef = React.useRef(null);
     const [activeLocation, setActiveLocation] = React.useState(null);
 
-    // JSON-LD für SEO
     const schemaData = {
         "@context": "https://schema.org",
         "@type": "Organization",

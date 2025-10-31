@@ -1,95 +1,104 @@
-// GermanyMap.jsx
-import React from "react";
+import React, { memo, useMemo } from "react";
 import {
     ComposableMap,
     Geographies,
     Geography,
     Marker,
 } from "react-simple-maps";
-import { router } from "@inertiajs/react";
 
-const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
+const DE_STATES_URL =
+    "https://cdn.jsdelivr.net/gh/isellsoap/deutschlandGeoJSON@master/2_bundeslaender/4_niedrig.geo.json";
 
-export default function GermanyMap({ locations, activeId, setActiveId }) {
+const GermanyMap = ({ locations = [], activeId, setActiveId }) => {
+    const markers = useMemo(
+        () =>
+            (locations || [])
+                .filter(
+                    (l) =>
+                        l?.coordinates &&
+                        Number.isFinite(l.coordinates.lat) &&
+                        Number.isFinite(l.coordinates.lng)
+                )
+                .map((l) => ({
+                    id: l.id,
+                    name: l.city || l.title || `#${l.id}`,
+                    coords: [l.coordinates.lng, l.coordinates.lat],
+                })),
+        [locations]
+    );
+
+    const baseFill = "#e5e7eb";
+    const stroke = "#cbd5e1";
+    const hoverFill = "#dbeafe";
+    const activeFill = "#bae6fd";
+
     return (
-        <div className="germany-map-svg">
+        <div className="map-box">
             <ComposableMap
                 projection="geoMercator"
-                projectionConfig={{
-                    center: [10.45, 51.165], // Almanya merkezi
-                    scale: 3500, // ==> BÜYÜK görünüm (2800–3800 arası oynatabilirsin)
-                }}
-                width={800} // yüksek çözünürlükte path üretir
-                height={1000}
-                style={{ width: "100%", height: "auto" }} // responsive
+                projectionConfig={{ center: [10.3, 51.2], scale: 3400 }}
+                width={500}
+                height={780}
+                style={{ width: "100%", height: "100%" }} // kutuyu doldur
             >
-                <Geographies geography={geoUrl}>
+                <Geographies geography={DE_STATES_URL}>
                     {({ geographies }) =>
-                        geographies
-                            .filter((g) => g.properties.name === "Germany")
-                            .map((geo) => (
-                                <Geography
-                                    key={geo.rsmKey}
-                                    geography={geo}
-                                    fill="#E5E7EB"
-                                    stroke="#C9CED6"
-                                    strokeWidth={1}
-                                />
-                            ))
+                        geographies.map((geo) => (
+                            <Geography
+                                key={geo.rsmKey}
+                                geography={geo}
+                                style={{
+                                    default: {
+                                        fill: baseFill,
+                                        stroke,
+                                        strokeWidth: 0.8,
+                                        outline: "none",
+                                    },
+                                    hover: {
+                                        fill: hoverFill,
+                                        stroke,
+                                        strokeWidth: 0.9,
+                                        outline: "none",
+                                    },
+                                    pressed: {
+                                        fill: activeFill,
+                                        stroke,
+                                        strokeWidth: 0.9,
+                                        outline: "none",
+                                    },
+                                }}
+                            />
+                        ))
                     }
                 </Geographies>
 
-                {locations.map((loc) => {
-                    const isActive = activeId === loc.id;
+                {markers.map((m) => {
+                    const isActive = activeId === m.id;
                     return (
                         <Marker
-                            key={loc.id}
-                            coordinates={[
-                                loc.coordinates.lng,
-                                loc.coordinates.lat,
-                            ]}
-                            onMouseEnter={() => setActiveId?.(loc.id)}
+                            key={m.id}
+                            coordinates={m.coords}
+                            onMouseEnter={() => setActiveId?.(m.id)}
                             onMouseLeave={() => setActiveId?.(null)}
-                            onClick={() => router.visit(loc.link)}
-                            tabIndex={0}
-                            onKeyDown={(e) =>
-                                e.key === "Enter" && router.visit(loc.link)
-                            }
+                            onClick={() => setActiveId?.(m.id)}
                         >
-                            {/* pin */}
-                            <g
-                                transform="translate(-6,-18)"
-                                aria-label={loc.title}
-                            >
-                                <circle
-                                    r={10}
-                                    fill={isActive ? "#065F46" : "#10B981"}
-                                    opacity={isActive ? 1 : 0.85}
-                                />
-                                <path
-                                    d="M6 0 L12 18 L0 18 Z"
-                                    fill={isActive ? "#065F46" : "#10B981"}
-                                />
-                            </g>
-
-                            {/* label: sadece aktifken göster => üst üste binmez */}
-                            {isActive && (
-                                <text
-                                    y={-24}
-                                    textAnchor="middle"
-                                    style={{
-                                        fontSize: 11,
-                                        fontWeight: 600,
-                                        pointerEvents: "none",
-                                    }}
-                                >
-                                    {loc.city}
-                                </text>
-                            )}
+                            <circle
+                                r={9.5}
+                                fill="rgba(14,165,233,0.18)"
+                                stroke="rgba(14,165,233,0.45)"
+                                strokeWidth={1.6}
+                            />
+                            <circle
+                                r={isActive ? 6 : 5}
+                                fill={isActive ? "#06b6d4" : "#22d3ee"}
+                                style={{ transition: "r .15s ease" }}
+                            />
                         </Marker>
                     );
                 })}
             </ComposableMap>
         </div>
     );
-}
+};
+
+export default memo(GermanyMap);

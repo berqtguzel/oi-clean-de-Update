@@ -1,7 +1,4 @@
-// resources/js/Components/Home/HeroSection.jsx
 import React from "react";
-import { Link } from "@inertiajs/react";
-// Framer Motion 11+: 'motion/react' kullanımı
 import { motion } from "motion/react";
 
 const container = {
@@ -20,7 +17,6 @@ const item = {
 export default function HeroSection({ content }) {
     return (
         <div className="relative h-[600px] overflow-hidden flex items-center justify-center text-white">
-            {/* 🎬 Hintergrundvideo (animiert: fade + slight zoom) */}
             <motion.video
                 autoPlay
                 loop
@@ -36,7 +32,6 @@ export default function HeroSection({ content }) {
                 Ihr Browser unterstützt das Video-Tag nicht.
             </motion.video>
 
-            {/* Koyulaştırma katmanı (hafif fade-in) */}
             <motion.div
                 className="absolute inset-0 bg-black/40"
                 initial={{ opacity: 0 }}
@@ -44,7 +39,6 @@ export default function HeroSection({ content }) {
                 transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
             />
 
-            {/* 🌟 Inhalt (staggered entrance) */}
             <motion.div
                 className="relative text-center z-10 p-4"
                 variants={container}
@@ -69,18 +63,18 @@ export default function HeroSection({ content }) {
                 </motion.p>
 
                 <motion.div className="mt-10 space-x-4" variants={item}>
-                    <Link
+                    <a
                         href="#services"
                         className="bg-yellow-400 text-gray-900 font-bold py-3 px-8 rounded-full hover:bg-yellow-500 transition duration-300"
                     >
                         Unsere Leistungen entdecken
-                    </Link>
-                    <Link
-                        href="/#contact"
+                    </a>
+                    <a
+                        href="#contact"
                         className="bg-transparent border-2 border-white text-white font-bold py-3 px-8 rounded-full hover:bg-white hover:text-gray-900 transition duration-300"
                     >
                         Kontakt aufnehmen
-                    </Link>
+                    </a>
                 </motion.div>
             </motion.div>
         </div>

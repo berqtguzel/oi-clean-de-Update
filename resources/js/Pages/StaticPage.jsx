@@ -33,14 +33,11 @@ export default function StaticPage({ slug, page = {}, meta = {} }) {
                 </script>
             </Head>
 
-            {/* HERO */}
             <section
                 className={`sp-hero ${heroImage ? "sp-hero--has-img" : ""}`}
             >
-                {/* dekoratif arka plan (mesh & shapes) */}
                 <div className="sp-hero__decor" aria-hidden="true" />
 
-                {/* görsel kapsayıcı (clip-path ile şekilli) */}
                 <div className="sp-hero__media">
                     {heroImage ? (
                         <img
@@ -55,17 +52,8 @@ export default function StaticPage({ slug, page = {}, meta = {} }) {
                     <div className="sp-hero__overlay" aria-hidden="true" />
                 </div>
 
-                {/* içerik */}
                 <div className="sp-hero__inner container">
-                    <nav className="sp-crumbs">
-                        <Link href="/" className="sp-crumbs__link">
-                            Start
-                        </Link>
-                        <span className="sp-crumbs__sep">/</span>
-                        <span className="sp-crumbs__current">
-                            {page?.title || slug}
-                        </span>
-                    </nav>
+                    <nav className="sp-crumbs"></nav>
 
                     <h1 className="sp-title">{page?.title || "Static Page"}</h1>
                     {page?.subtitle && (
@@ -74,7 +62,6 @@ export default function StaticPage({ slug, page = {}, meta = {} }) {
                 </div>
             </section>
 
-            {/* CONTENT */}
             <section className="sp-content">
                 <div className="container">
                     <article className="sp-card sp-fadeup">

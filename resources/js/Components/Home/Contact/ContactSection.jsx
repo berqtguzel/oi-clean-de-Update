@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "@inertiajs/react";
-import "./ContactSection.css";
-
+import "../../../../css/ContactSection.css";
 import DotGrid from "@/Components/ReactBits/Backgrounds/DotGrid";
 
 const ContactSection = () => {

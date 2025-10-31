@@ -3,6 +3,7 @@ import Header from "../Components/Header";
 import Footer from "../Components/Footer";
 import React from "react";
 import OfferDock from "../Components/OfferDock";
+import QuoteModal from "../Components/Modals/QuoteModal";
 
 export default function AppLayout({ content, children, currentRoute }) {
     return (
@@ -11,6 +12,7 @@ export default function AppLayout({ content, children, currentRoute }) {
             <main className="flex-grow relative z-10">{children}</main>
             <Footer content={content} />
             <OfferDock />
+            <QuoteModal />
         </div>
     );
 }

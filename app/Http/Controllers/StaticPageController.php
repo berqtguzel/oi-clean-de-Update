@@ -143,7 +143,7 @@ class StaticPageController extends Controller
                 ],
             ],
 
-            // IMPRESSUM
+
             'impressum' => [
                 'title'    => 'Impressum',
                 'subtitle' => 'Angaben gemäß § 5 TMG',
