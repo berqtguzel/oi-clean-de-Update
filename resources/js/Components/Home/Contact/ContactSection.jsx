@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useForm } from "@inertiajs/react";
 import "./ContactSection.css";
 
+import DotGrid from "@/Components/ReactBits/Backgrounds/DotGrid";
+
 const ContactSection = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -24,14 +26,29 @@ const ContactSection = () => {
                 reset();
                 setIsSubmitting(false);
             },
-            onError: () => {
-                setIsSubmitting(false);
-            },
+            onError: () => setIsSubmitting(false),
         });
     };
 
     return (
-        <section className="contact-section" id="contact">
+        <section className="contact-section rbits-section" id="contact">
+            <div className="rbits-bg-wrap" aria-hidden>
+                <DotGrid
+                    dotSize={10}
+                    gap={15}
+                    baseColor="#1D4ED8"
+                    activeColor="#075782"
+                    proximity={120}
+                    shockRadius={250}
+                    shockStrength={5}
+                    resistance={750}
+                    returnDuration={1.5}
+                />
+
+                <div className="rbits-overlay-grad" />
+                <div className="rbits-vignette" />
+            </div>
+
             <div className="contact-container">
                 <div className="contact-content">
                     <div className="contact-info">

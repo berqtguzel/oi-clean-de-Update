@@ -2,8 +2,8 @@ import React from "react";
 import { Link } from "@inertiajs/react";
 import { motion } from "framer-motion";
 import { FaHotel, FaBuilding, FaTools } from "react-icons/fa";
-import Aurora from "../ReactBits/Backgrounds/Aurora";
-import "../../../css/ServiceCategories.css";
+import Aurora from "@/Components/ReactBits/Backgrounds/Aurora";
+import "./ServiceCategories.css";
 
 /**
  * Kategori verileri: gradient için hex kullanıyoruz

@@ -13,7 +13,7 @@ import {
     FaCouch,
 } from "react-icons/fa";
 
-import LiquidEther from "../ReactBits/Backgrounds/LiquidEther";
+import LiquidEther from "@/Components/ReactBits/Backgrounds/LiquidEther";
 
 /* --- Tema durumu ( .dark class ) dinlemek için küçük yardımcı hook --- */
 function useIsDark() {

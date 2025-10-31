@@ -1,10 +1,10 @@
 import React from "react";
 import HeroSection from "@/Components/Home/HeroSection";
-import ServiceCategories from "@/Components/Home/ServiceCategories";
+import ServiceCategories from "@/Components/Home/Services/ServiceCategories";
 import AppLayout from "@/Layouts/AppLayout";
-import ServicesGrid from "@/Components/Services/ServicesGrid";
-import LocationsGrid from "@/Components/Locations/LocationsGrid";
-import ContactSection from "@/Components/Contact/ContactSection";
+import ServicesGrid from "@/Components/Home/Services/ServicesGrid";
+import LocationsGrid from "@/Components/Home/Locations/LocationsGrid";
+import ContactSection from "@/Components/Home/Contact/ContactSection";
 
 export default function Home({
     content,

@@ -76,7 +76,7 @@ export default function HeroSection({ content }) {
                         Unsere Leistungen entdecken
                     </Link>
                     <Link
-                        href="#contact"
+                        href="/#contact"
                         className="bg-transparent border-2 border-white text-white font-bold py-3 px-8 rounded-full hover:bg-white hover:text-gray-900 transition duration-300"
                     >
                         Kontakt aufnehmen

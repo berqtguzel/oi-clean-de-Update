@@ -82,6 +82,7 @@ const LocationsGrid = ({ locations = [] }) => {
 
     return (
         <section
+            id="location"
             className="locations-section relative overflow-hidden"
             aria-labelledby="locations-title"
         >
